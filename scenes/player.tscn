@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cexilddc1d5o0"]
+
+[ext_resource type="Script" uid="uid://tkbng0dsbdyd" path="res://scripts/player.gd" id="1_3vyb7"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u8vuu"]
+radius = 4.0
+height = 12.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("interaction_raycast")]
+collision_mask = 2
+platform_floor_layers = 4294967040
+script = ExtResource("1_3vyb7")
+interaction_raycast = NodePath("InteractionRaycast")
+
+[node name="MovementCollision" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_u8vuu")
+
+[node name="InteractionRaycast" type="RayCast2D" parent="."]
+position = Vector2(0, -4)
+target_position = Vector2(0, 16)
+collision_mask = 4
+collide_with_areas = true

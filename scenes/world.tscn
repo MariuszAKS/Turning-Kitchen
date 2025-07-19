@@ -1,3 +1,40 @@
-[gd_scene format=3 uid="uid://g0f14lw2s7wd"]
+[gd_scene load_steps=4 format=3 uid="uid://g0f14lw2s7wd"]
+
+[ext_resource type="PackedScene" uid="uid://cexilddc1d5o0" path="res://scenes/player.tscn" id="1_nnsk1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nnsk1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
+size = Vector2(318, 20)
 
 [node name="World" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_nnsk1")]
+position = Vector2(111, 55)
+
+[node name="TestInteract" type="StaticBody2D" parent="."]
+position = Vector2(227, 103)
+collision_layer = 6
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestInteract"]
+shape = SubResource("RectangleShape2D_nnsk1")
+
+[node name="TestWall" type="StaticBody2D" parent="."]
+position = Vector2(164, 117)
+collision_layer = 2
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestWall"]
+shape = SubResource("RectangleShape2D_rwgxs")
+
+[node name="TestInteract2" type="StaticBody2D" parent="."]
+position = Vector2(155, 149)
+collision_layer = 6
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestInteract2"]
+shape = SubResource("RectangleShape2D_nnsk1")
