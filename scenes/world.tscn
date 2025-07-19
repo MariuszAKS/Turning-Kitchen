@@ -1,40 +1,101 @@
-[gd_scene load_steps=4 format=3 uid="uid://g0f14lw2s7wd"]
+[gd_scene load_steps=7 format=4 uid="uid://g0f14lw2s7wd"]
 
 [ext_resource type="PackedScene" uid="uid://cexilddc1d5o0" path="res://scenes/player.tscn" id="1_nnsk1"]
+[ext_resource type="Texture2D" uid="uid://w6qqg1vmwvb8" path="res://art/visual/floor.png" id="2_rwgxs"]
+[ext_resource type="PackedScene" uid="uid://5wabxtxvo3cr" path="res://scenes/crate.tscn" id="3_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://b7g72mdnao4id" path="res://scenes/utensil.tscn" id="4_k0juu"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nnsk1"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4wyf3"]
+texture = ExtResource("2_rwgxs")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
-size = Vector2(318, 20)
+[sub_resource type="TileSet" id="TileSet_k0juu"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_4wyf3")
 
 [node name="World" type="Node2D"]
+y_sort_enabled = true
+
+[node name="TileMapLayers" type="Node2D" parent="."]
+
+[node name="Floor" type="TileMapLayer" parent="TileMapLayers"]
+tile_map_data = PackedByteArray("AAAAAAAAAAABAAAAAAAAAAEAAAABAAAAAAAAAAIAAAABAAAAAAAAAAMAAAABAAAAAAAAAAQAAAABAAAAAAAAAAUAAAABAAAAAAABAAUAAAABAAAAAAACAAUAAAABAAAAAAADAAUAAAABAAAAAAAEAAUAAAABAAAAAAAFAAUAAAABAAAAAAAGAAUAAAABAAAAAAAHAAUAAAABAAAAAAAIAAUAAAABAAAAAAAJAAUAAAABAAAAAAAJAAQAAAABAAAAAAAJAAMAAAABAAAAAAAJAAIAAAABAAAAAAAJAAEAAAABAAAAAAAJAAAAAAABAAAAAAAIAAAAAAABAAAAAAAHAAAAAAABAAAAAAAGAAAAAAABAAAAAAAFAAAAAAABAAAAAAAEAAAAAAABAAAAAAADAAAAAAABAAAAAAACAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAACAAQAAAAAAAAAAAADAAQAAAAAAAAAAAAGAAQAAAAAAAAAAAAHAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAIAAMAAAAAAAAAAAAIAAIAAAAAAAAAAAAHAAIAAAAAAAAAAAAHAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAADAAEAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAAAAAAAAADAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAAHAAMAAAAAAAAAAAAIAAEAAAAAAAAAAAAFAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAABAAQAAAAAAAAAAAAAAP//AAABAAAAAAABAP//AAABAAAAAAACAP//AAABAAAAAAADAP//AAABAAAAAAAEAP//AAABAAAAAAAFAP//AAABAAAAAAAGAP//AAABAAAAAAAHAP//AAABAAAAAAAIAP//AAABAAAAAAAJAP//AAABAAAAAAD///7/AAABAAAAAAD/////AAABAAAAAAD//wAAAAABAAAAAAD//wEAAAABAAAAAAD//wIAAAABAAAAAAD//wMAAAABAAAAAAD//wQAAAABAAAAAAD//wUAAAABAAAAAAD//wYAAAABAAAAAAAAAAYAAAABAAAAAAABAAYAAAABAAAAAAACAAYAAAABAAAAAAADAAYAAAABAAAAAAAEAAYAAAABAAAAAAAFAAYAAAABAAAAAAAGAAYAAAABAAAAAAAHAAYAAAABAAAAAAAIAAYAAAABAAAAAAAJAAYAAAABAAAAAAAKAAYAAAABAAAAAAAKAAUAAAABAAAAAAAKAAQAAAABAAAAAAAKAAMAAAABAAAAAAAKAAIAAAABAAAAAAAKAAEAAAABAAAAAAAKAAAAAAABAAAAAAAKAP//AAABAAAAAAAKAP7/AAABAAAAAAAJAP7/AAABAAAAAAAIAP7/AAABAAAAAAAHAP7/AAABAAAAAAAGAP7/AAABAAAAAAAFAP7/AAABAAAAAAAEAP7/AAABAAAAAAADAP7/AAABAAAAAAACAP7/AAABAAAAAAABAP7/AAABAAAAAAAAAP7/AAABAAAAAAD+//3/AAABAAAAAAD+//7/AAABAAAAAAD+////AAABAAAAAAD+/wAAAAABAAAAAAD+/wEAAAABAAAAAAD+/wIAAAABAAAAAAD+/wMAAAABAAAAAAD+/wQAAAABAAAAAAD+/wUAAAABAAAAAAD+/wYAAAABAAAAAAD+/wcAAAABAAAAAAD//wcAAAABAAAAAAAAAAcAAAABAAAAAAABAAcAAAABAAAAAAACAAcAAAABAAAAAAADAAcAAAABAAAAAAAEAAcAAAABAAAAAAAFAAcAAAABAAAAAAAGAAcAAAABAAAAAAAHAAcAAAABAAAAAAAIAAcAAAABAAAAAAAJAAcAAAABAAAAAAAKAAcAAAABAAAAAAALAAcAAAABAAAAAAALAAYAAAABAAAAAAALAAUAAAABAAAAAAALAAQAAAABAAAAAAALAAMAAAABAAAAAAALAAIAAAABAAAAAAALAAEAAAABAAAAAAALAAAAAAABAAAAAAALAP//AAABAAAAAAALAP7/AAABAAAAAAALAP3/AAABAAAAAAAKAP3/AAABAAAAAAAJAP3/AAABAAAAAAAIAP3/AAABAAAAAAAHAP3/AAABAAAAAAAGAP3/AAABAAAAAAAFAP3/AAABAAAAAAAEAP3/AAABAAAAAAADAP3/AAABAAAAAAACAP3/AAABAAAAAAABAP3/AAABAAAAAAAAAP3/AAABAAAAAAD///3/AAABAAAAAAD9//3/AAABAAAAAAD8//3/AAABAAAAAAD7//3/AAABAAAAAAD7//7/AAABAAAAAAD7////AAABAAAAAAD7/wAAAAABAAAAAAD7/wEAAAABAAAAAAD7/wIAAAABAAAAAAD7/wMAAAABAAAAAAD7/wQAAAABAAAAAAD7/wUAAAABAAAAAAD7/wYAAAABAAAAAAD7/wcAAAABAAAAAAD8/wcAAAABAAAAAAD9/wcAAAABAAAAAAD9/wYAAAABAAAAAAD9/wEAAAABAAAAAAD9/wAAAAABAAAAAAD9////AAABAAAAAAD9//7/AAABAAAAAAD8////AAABAAAAAAD8/wAAAAABAAAAAAD8/wEAAAABAAAAAAD8/wIAAAABAAAAAAD9/wIAAAABAAAAAAD9/wMAAAABAAAAAAD9/wQAAAABAAAAAAD9/wUAAAABAAAAAAD8/wYAAAABAAAAAAD8/wUAAAABAAAAAAD8/wQAAAABAAAAAAD8/wMAAAABAAAAAAD8//7/AAABAAAAAAAMAP3/AAABAAAAAAANAP3/AAABAAAAAAAOAP3/AAABAAAAAAAOAP7/AAABAAAAAAAOAP//AAABAAAAAAAOAAAAAAABAAAAAAAOAAEAAAABAAAAAAAOAAIAAAABAAAAAAAOAAMAAAABAAAAAAAOAAQAAAABAAAAAAANAAQAAAABAAAAAAANAAUAAAABAAAAAAANAAYAAAABAAAAAAANAAcAAAABAAAAAAAOAAcAAAABAAAAAAAOAAYAAAABAAAAAAAOAAUAAAABAAAAAAAMAAYAAAABAAAAAAAMAAcAAAABAAAAAAAMAAUAAAABAAAAAAAMAAQAAAABAAAAAAAMAAMAAAABAAAAAAAMAAIAAAABAAAAAAAMAAEAAAABAAAAAAAMAAAAAAABAAAAAAAMAP//AAABAAAAAAAMAP7/AAABAAAAAAANAP7/AAABAAAAAAANAP//AAABAAAAAAANAAAAAAABAAAAAAANAAEAAAABAAAAAAANAAIAAAABAAAAAAANAAMAAAABAAAAAAD7/wgAAAABAAAAAAD8/wgAAAABAAAAAAD9/wgAAAABAAAAAAD+/wgAAAABAAAAAAD//wgAAAABAAAAAAAAAAgAAAABAAAAAAABAAgAAAABAAAAAAACAAgAAAABAAAAAAADAAgAAAABAAAAAAAEAAgAAAABAAAAAAAFAAgAAAABAAAAAAAGAAgAAAABAAAAAAAHAAgAAAABAAAAAAAIAAgAAAABAAAAAAAJAAgAAAABAAAAAAAKAAgAAAABAAAAAAALAAgAAAABAAAAAAAMAAgAAAABAAAAAAANAAgAAAABAAAAAAAOAAgAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_k0juu")
 
 [node name="Player" parent="." instance=ExtResource("1_nnsk1")]
-position = Vector2(111, 55)
+position = Vector2(115, 108)
 
-[node name="TestInteract" type="StaticBody2D" parent="."]
-position = Vector2(227, 103)
-collision_layer = 6
-collision_mask = 0
-metadata/_edit_group_ = true
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(2, 2)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestInteract"]
-shape = SubResource("RectangleShape2D_nnsk1")
+[node name="IngredientCrates" type="Node2D" parent="."]
 
-[node name="TestWall" type="StaticBody2D" parent="."]
-position = Vector2(164, 117)
-collision_layer = 2
-collision_mask = 0
-metadata/_edit_group_ = true
+[node name="Carrots" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
+position = Vector2(48, 144)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestWall"]
-shape = SubResource("RectangleShape2D_rwgxs")
+[node name="Onions" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
+position = Vector2(80, 144)
+content = 1
 
-[node name="TestInteract2" type="StaticBody2D" parent="."]
-position = Vector2(155, 149)
-collision_layer = 6
-collision_mask = 0
-metadata/_edit_group_ = true
+[node name="Potatoes" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
+position = Vector2(112, 144)
+content = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestInteract2"]
-shape = SubResource("RectangleShape2D_nnsk1")
+[node name="Tomatoes" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
+position = Vector2(144, 144)
+content = 3
+
+[node name="Rice" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
+position = Vector2(176, 144)
+content = 4
+
+[node name="Beans" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
+position = Vector2(208, 144)
+content = 5
+
+[node name="Beef" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
+position = Vector2(240, 144)
+content = 6
+
+[node name="Chicken" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
+position = Vector2(272, 144)
+content = 7
+
+[node name="Utensils" type="Node2D" parent="."]
+
+[node name="Empty1" parent="Utensils" instance=ExtResource("4_k0juu")]
+position = Vector2(48, 32)
+utensil = 3
+
+[node name="Scrape" parent="Utensils" instance=ExtResource("4_k0juu")]
+position = Vector2(80, 32)
+utensil = 2
+
+[node name="Chop" parent="Utensils" instance=ExtResource("4_k0juu")]
+position = Vector2(112, 32)
+utensil = 1
+
+[node name="Sink" parent="Utensils" instance=ExtResource("4_k0juu")]
+position = Vector2(144, 32)
+utensil = 5
+
+[node name="Empty2" parent="Utensils" instance=ExtResource("4_k0juu")]
+position = Vector2(176, 32)
+utensil = 3
+
+[node name="Oven1" parent="Utensils" instance=ExtResource("4_k0juu")]
+position = Vector2(208, 32)
+utensil = 6
+
+[node name="Oven2" parent="Utensils" instance=ExtResource("4_k0juu")]
+position = Vector2(240, 32)
+utensil = 6
+
+[node name="Submit" parent="Utensils" instance=ExtResource("4_k0juu")]
+position = Vector2(272, 32)
