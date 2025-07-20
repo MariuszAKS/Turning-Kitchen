@@ -38,37 +38,37 @@ anchor_mode = 0
 zoom = Vector2(2, 2)
 
 [node name="IngredientCrates" type="Node2D" parent="."]
-position = Vector2(0, -24)
+z_index = 1
 
 [node name="Carrots" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
-position = Vector2(48, 144)
+position = Vector2(48, 120)
 
 [node name="Onions" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
-position = Vector2(80, 144)
+position = Vector2(80, 120)
 content = 1
 
 [node name="Potatoes" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
-position = Vector2(112, 144)
+position = Vector2(112, 120)
 content = 2
 
 [node name="Tomatoes" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
-position = Vector2(144, 144)
+position = Vector2(144, 120)
 content = 3
 
 [node name="Rice" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
-position = Vector2(176, 144)
+position = Vector2(176, 120)
 content = 4
 
 [node name="Beans" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
-position = Vector2(208, 144)
+position = Vector2(208, 120)
 content = 5
 
 [node name="Beef" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
-position = Vector2(240, 144)
+position = Vector2(240, 120)
 content = 6
 
 [node name="Chicken" parent="IngredientCrates" instance=ExtResource("3_4wyf3")]
-position = Vector2(272, 144)
+position = Vector2(272, 120)
 content = 7
 
 [node name="Utensils" type="Node2D" parent="."]
@@ -92,9 +92,15 @@ utensil = 5
 [node name="Oven1" parent="Utensils" instance=ExtResource("4_k0juu")]
 position = Vector2(176, 32)
 utensil = 6
+start_with_pot = true
 
 [node name="Oven2" parent="Utensils" instance=ExtResource("4_k0juu")]
 position = Vector2(208, 32)
+utensil = 6
+start_with_pot = true
+
+[node name="Oven3" parent="Utensils" instance=ExtResource("4_k0juu")]
+position = Vector2(240, 32)
 utensil = 6
 
 [node name="Submit" parent="Utensils" instance=ExtResource("4_k0juu")]

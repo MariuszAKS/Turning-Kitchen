@@ -62,7 +62,7 @@ func update_held_item(new_item, item_type):
 				held_item_sprite.hframes = 13
 			Cooking.HeldItemType.POT:
 				held_item_sprite.texture = pots_textures
-				held_item_sprite.hframes = 17
+				held_item_sprite.hframes = 18
 			Cooking.HeldItemType.DISH:
 				held_item_sprite.texture = dishes_textures
 				held_item_sprite.hframes = 4
