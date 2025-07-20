@@ -2,6 +2,9 @@ class_name Utensil
 extends StaticBody2D
 
 
+var world_script: World
+
+
 @onready var ingredients_textures = load("res://art/visual/ingredients.png")
 @onready var ingredients_prepared_textures = load("res://art/visual/ingredients_prepared.png")
 @onready var pots_textures = load("res://art/visual/pots.png")
@@ -26,6 +29,8 @@ var utensil_functions: Array[Callable] = [
 
 
 func _ready():
+	world_script = get_tree().root.get_node("World")
+
 	update_utensil(utensil)
 
 	if utensil == Cooking.UtensilType.OVEN and start_with_pot:
@@ -92,8 +97,9 @@ func prepare_timer(result_item, item_type, id, time):
 
 
 func submit(held_item, item_type):
-	if held_item is Cooking.Dish:
-		# count the dish as prepared
+	if item_type == Cooking.HeldItemType.DISH:
+		world_script.submited_dish(held_item)
+		
 		return [null, null]
 	return [held_item, item_type]
 
@@ -174,6 +180,8 @@ func sink(held_item, item_type):
 			put_item(held_item, item_type, 0)
 
 		return [null, null]
+	
+	return [held_item, item_type]
 
 func oven(held_item, item_type):
 	if held_item == null:

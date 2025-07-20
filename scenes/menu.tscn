@@ -55,6 +55,7 @@ layout_mode = 2
 text = "Statistics"
 
 [node name="Statistics" type="Control" parent="." node_paths=PackedStringArray("column_number", "column_name", "column_score", "column_datetime", "button_sort_name", "button_sort_score", "button_sort_datetime", "button_back")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -12,6 +12,19 @@ enum Pot { EMPTY, WATER, WATER_BOILING, NOODLES, NOODLES_BOILING, TOMATO_PASTE, 
            RICE, RICE_BEANS, RICE_BEANS_BOILING}
 enum Dish { BEANS_RICE, CHICKEN_SOUP, BEEF_POTATOES, TOMATO_SOUP }
 
+var times = {
+    Dish.BEANS_RICE: 15,
+    Dish.BEEF_POTATOES: 20,
+    Dish.CHICKEN_SOUP: 25,
+    Dish.TOMATO_SOUP: 35,
+}
 
-class Ingredient_:
-    var name
+var first_goals = [
+    { Dish.BEANS_RICE: 2, Dish.CHICKEN_SOUP: 0, Dish.BEEF_POTATOES: 0, Dish.TOMATO_SOUP: 0 }, # 2
+    { Dish.BEANS_RICE: 1, Dish.CHICKEN_SOUP: 0, Dish.BEEF_POTATOES: 2, Dish.TOMATO_SOUP: 0 }, # 3
+    { Dish.BEANS_RICE: 2, Dish.CHICKEN_SOUP: 1, Dish.BEEF_POTATOES: 2, Dish.TOMATO_SOUP: 0 }, # 5
+    { Dish.BEANS_RICE: 0, Dish.CHICKEN_SOUP: 3, Dish.BEEF_POTATOES: 3, Dish.TOMATO_SOUP: 0 }, # 6
+    { Dish.BEANS_RICE: 2, Dish.CHICKEN_SOUP: 0, Dish.BEEF_POTATOES: 2, Dish.TOMATO_SOUP: 1 }, # 5
+    { Dish.BEANS_RICE: 4, Dish.CHICKEN_SOUP: 2, Dish.BEEF_POTATOES: 2, Dish.TOMATO_SOUP: 0 }, # 8
+    { Dish.BEANS_RICE: 4, Dish.CHICKEN_SOUP: 2, Dish.BEEF_POTATOES: 4, Dish.TOMATO_SOUP: 2 }, # 12
+]
