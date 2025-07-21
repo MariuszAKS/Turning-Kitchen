@@ -2,6 +2,8 @@ class_name World
 extends Node2D
 
 
+@export var player: Player
+
 @export var menu: Control
 var start_screen: VBoxContainer
 # var pause_screen: VBoxContainer
@@ -41,6 +43,9 @@ func _ready():
 	# unpause_button.pressed.connect(unpause_game)
 	next_day_button.pressed.connect(start_next_day)
 
+	survived_label = day_won_screen.get_node("Label")
+	death_label = day_lost_screen.get_node("Label")
+
 	timer.timeout.connect(on_timer_timeout)
 
 	dish_left_counts = [
@@ -63,6 +68,7 @@ func _process(_delta):
 
 
 func start_new_game():
+	player.can_move = true
 	menu.visible = false
 
 	time_multiplier = 2
@@ -72,6 +78,8 @@ func start_new_game():
 	timer.start()
 
 func start_next_day():
+	player.can_move = true
+
 	menu.visible = false
 
 	current_day += 1
@@ -151,6 +159,8 @@ func check_goals_completion():
 
 
 func completed_all_goals():
+	player.can_move = false
+
 	timer.stop()
 
 	menu.visible = true
@@ -159,14 +169,17 @@ func completed_all_goals():
 	day_won_screen.visible = true
 	day_lost_screen.visible = false
 
-	survived_label.text = "You lived ${current_day+1} so far.\nContinue?"
+	survived_label.text = "You lived " + str(current_day+1) + " so far.\nContinue?"
 
 
 func on_timer_timeout():
+	player.can_move = false
+	player.death()
+
 	menu.visible = true
 	start_screen.visible = false
 	# pause_screen.visible = false
 	day_won_screen.visible = false
 	day_lost_screen.visible = true
 
-	death_label.text = "You died after ${current_day} days.\nTry again?"
+	death_label.text = "You died after " + str(current_day) + " days.\nTry again?"

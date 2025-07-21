@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://5wabxtxvo3cr"]
+[gd_scene load_steps=6 format=3 uid="uid://5wabxtxvo3cr"]
 
 [ext_resource type="Script" uid="uid://cg3wjue83iltr" path="res://scripts/crate.gd" id="1_b66cd"]
+[ext_resource type="AudioStream" uid="uid://q8m4hp38ma8h" path="res://art/audio/Ingredient.wav" id="2_74u5o"]
 [ext_resource type="Texture2D" uid="uid://dk310iuj6wn3f" path="res://art/visual/crate.png" id="2_dwt0d"]
 [ext_resource type="Texture2D" uid="uid://djjaw3l8swjl3" path="res://art/visual/ingredients.png" id="3_kn6iu"]
 
@@ -11,6 +12,10 @@ size = Vector2(32, 18)
 collision_layer = 6
 collision_mask = 0
 script = ExtResource("1_b66cd")
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-1, 0)
+stream = ExtResource("2_74u5o")
 
 [node name="CrateSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_dwt0d")

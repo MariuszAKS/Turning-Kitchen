@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 
@@ -15,21 +16,28 @@ var previous_direction: Vector2 = Vector2.ZERO
 var held_item_type = null
 var held_item = null
 
+var can_move: bool = true
+
 
 func _process(_delta):
-	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if can_move:
+		var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
-	update_animation(direction)
-	update_interaction_raycast(direction)
+		update_animation(direction)
+		update_interaction_raycast(direction)
 
-	if Input.is_action_just_pressed("pause"): pass
-	elif Input.is_action_just_pressed("goal_list"): pass
-	elif Input.is_action_just_pressed("interact"): interact()
-	elif Input.is_action_just_pressed("drop"): drop()
+		if Input.is_action_just_pressed("pause"): pass
+		elif Input.is_action_just_pressed("goal_list"): pass
+		elif Input.is_action_just_pressed("interact"): interact()
+		elif Input.is_action_just_pressed("drop"): drop()
 
-	previous_direction = direction
-	velocity = direction * MOVEMENT_SPEED
-	move_and_slide()
+		previous_direction = direction
+		velocity = direction * MOVEMENT_SPEED
+		move_and_slide()
+
+func death():
+	can_move = false
+	animations.play("death")
 
 
 func interact(): # Not finished with utensils

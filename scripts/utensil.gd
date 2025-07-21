@@ -21,6 +21,7 @@ var item_types = [null, null]
 @onready var sprites: Array[Sprite2D] = [get_node("Sprite1"), get_node("Sprite2")]
 @onready var timers: Array[Timer] = [get_node("Timer1"), get_node("Timer2")]
 @onready var progress_bars: Array[TextureProgressBar] = [get_node("Progress1"), get_node("Progress2")]
+@onready var audios: Array[AudioStreamPlayer2D] = [get_node("Audio1"), get_node("Audio2")]
 
 # Submit, Chop, Scrape, Mill, SinkRunning, Sink, Oven, OvenRoast, OvenCook, OvenBoth
 var utensil_functions: Array[Callable] = [
@@ -91,72 +92,91 @@ func put_item(item, item_type, id):
 			sprites[id].texture = null
 
 
-func prepare_timer(result_item, item_type, id, time):
+func prepare_timer(result_item, item_type, id, time, audio_act):
+	for connection in timers[id].timeout.get_connections():
+		timers[id].timeout.disconnect(connection["callable"])
+	
 	timers[id].timeout.connect(func(): put_item(result_item, item_type, id))
+
+	if audio_act == "play": timers[id].timeout.connect(func(): play_audio(id))
+	elif audio_act == "stop": timers[id].timeout.connect(func(): stop_audio(id))
+	
 	timers[id].start(time)
+
+func play_audio(id):
+	audios[id].play()
+
+func stop_audio(id):
+	audios[id].stop()
 
 
 func submit(held_item, item_type):
 	if item_type == Cooking.HeldItemType.DISH:
 		world_script.submited_dish(held_item)
-		
+
 		return [null, null]
 	return [held_item, item_type]
 
 func chop(held_item, item_type):
 	if held_item == null and items[0] != null:
+		stop_audio(0)
 		return take_item(0)
 
 	elif held_item != null and items[0] == null:
 		match item_type:
 			Cooking.HeldItemType.INGREDIENT:
 				if held_item == Cooking.Ingredient.TOMATO:
-					prepare_timer(Cooking.IngredientPrepared.CHOPPED_TOMATO, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3)
+					prepare_timer(Cooking.IngredientPrepared.CHOPPED_TOMATO, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3, "stop")
 				else:
 					return [held_item, item_type]
 			Cooking.HeldItemType.INGREDIENT_PREPARED:
 				match held_item:
 					Cooking.IngredientPrepared.SCRAPED_CARROT:
-						prepare_timer(Cooking.IngredientPrepared.CHOPPED_CARROT, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3)
+						prepare_timer(Cooking.IngredientPrepared.CHOPPED_CARROT, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3, "stop")
 					Cooking.IngredientPrepared.SCRAPED_ONION:
-						prepare_timer(Cooking.IngredientPrepared.CHOPPED_ONION, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3)
+						prepare_timer(Cooking.IngredientPrepared.CHOPPED_ONION, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3, "stop")
 					Cooking.IngredientPrepared.SCRAPED_POTATO:
-						prepare_timer(Cooking.IngredientPrepared.CHOPPED_POTATO, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3)
+						prepare_timer(Cooking.IngredientPrepared.CHOPPED_POTATO, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3, "stop")
 					_: return [held_item, item_type]
 			_: return [held_item, item_type]
 
+		play_audio(0)
 		return [null, null]
 	
 	else: return [held_item, item_type]
 
 func scrape(held_item, item_type):
 	if held_item == null and items[0] != null:
+		stop_audio(0)
 		return take_item(0)
 
 	elif held_item != null and items[0] == null:
 		if item_type == Cooking.HeldItemType.INGREDIENT:
 			match held_item:
 				Cooking.Ingredient.CARROT:
-					prepare_timer(Cooking.IngredientPrepared.SCRAPED_CARROT, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3)
+					prepare_timer(Cooking.IngredientPrepared.SCRAPED_CARROT, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3, "stop")
 				Cooking.Ingredient.ONION:
-					prepare_timer(Cooking.IngredientPrepared.SCRAPED_ONION, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3)
+					prepare_timer(Cooking.IngredientPrepared.SCRAPED_ONION, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3, "stop")
 				Cooking.Ingredient.POTATO:
-					prepare_timer(Cooking.IngredientPrepared.SCRAPED_POTATO, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3)
+					prepare_timer(Cooking.IngredientPrepared.SCRAPED_POTATO, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3, "stop")
 				_: return [held_item, item_type]
 		else:
 			return [held_item, item_type]
-			
+		
+		play_audio(0)
 		return [null, null]
 	
 	else: return [held_item, item_type]
 
 func mill(held_item, item_type):
 	if held_item == null and items[0] != null:
+		stop_audio(0)
 		return take_item(0)
 
 	elif items[0] == null and item_type == Cooking.HeldItemType.INGREDIENT_PREPARED and held_item == Cooking.IngredientPrepared.CHOPPED_TOMATO:
-		prepare_timer(Cooking.IngredientPrepared.TOMATO_PASTE, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3)
+		prepare_timer(Cooking.IngredientPrepared.TOMATO_PASTE, Cooking.HeldItemType.INGREDIENT_PREPARED, 0, 3, "stop")
 
+		play_audio(0)
 		return [null, null]
 		
 	return [held_item, item_type]
@@ -174,7 +194,8 @@ func sink(held_item, item_type):
 	elif items[0] == null and item_type == Cooking.HeldItemType.POT:
 		if held_item == Cooking.Pot.EMPTY:
 			update_utensil(Cooking.UtensilType.SINK_RUNNING)
-			prepare_timer(Cooking.Pot.WATER, Cooking.HeldItemType.POT, 0, 2)
+			play_audio(0)
+			prepare_timer(Cooking.Pot.WATER, Cooking.HeldItemType.POT, 0, 2, "none")
 
 		else: # placing pot with water (or sth else) to free one more oven
 			put_item(held_item, item_type, 0)
@@ -227,11 +248,11 @@ func oven(held_item, item_type):
 			# roasting below
 			if item_type == Cooking.HeldItemType.INGREDIENT and held_item == Cooking.Ingredient.BEEF:
 				update_utensil(Cooking.UtensilType.OVER_ROAST)
-				prepare_timer(Cooking.IngredientPrepared.ROASTED_BEEF, Cooking.HeldItemType.INGREDIENT_PREPARED, 1, 10)
+				prepare_timer(Cooking.IngredientPrepared.ROASTED_BEEF, Cooking.HeldItemType.INGREDIENT_PREPARED, 1, 10, "play")
 
 			elif item_type == Cooking.HeldItemType.INGREDIENT_PREPARED and held_item == Cooking.IngredientPrepared.CHOPPED_POTATO:
 				update_utensil(Cooking.UtensilType.OVER_ROAST)
-				prepare_timer(Cooking.IngredientPrepared.ROASTED_POTATO, Cooking.HeldItemType.INGREDIENT_PREPARED, 1, 10)
+				prepare_timer(Cooking.IngredientPrepared.ROASTED_POTATO, Cooking.HeldItemType.INGREDIENT_PREPARED, 1, 10, "play")
 
 			return [null, null]
 		
@@ -242,7 +263,7 @@ func oven(held_item, item_type):
 						Cooking.IngredientPrepared.MILLED_TOMATO:
 							put_item(Cooking.Pot.TOMATO_PASTE, Cooking.HeldItemType.POT, 0)
 							update_utensil(Cooking.UtensilType.OVEN_COOK)
-							prepare_timer(Cooking.Pot.TOMATO_PASTE_BOILING, Cooking.HeldItemType.POT, 0, 10)
+							prepare_timer(Cooking.Pot.TOMATO_PASTE_BOILING, Cooking.HeldItemType.POT, 0, 10, "play")
 
 						Cooking.IngredientPrepared.CHOPPED_CARROT:
 							put_item(Cooking.Pot.CARROTS, Cooking.HeldItemType.POT, 0)
@@ -261,17 +282,17 @@ func oven(held_item, item_type):
 			elif items[0] == Cooking.Pot.CARROTS_ONIONS and item_type == Cooking.HeldItemType.INGREDIENT and held_item == Cooking.Ingredient.CHICKEN:
 				put_item(Cooking.Pot.CARROTS_ONIONS_CHICKEN, Cooking.HeldItemType.POT, 0)
 				update_utensil(Cooking.UtensilType.OVEN_COOK)
-				prepare_timer(Cooking.Pot.CHICKEN_BROTH_BOILING, Cooking.HeldItemType.POT, 0, 10)
+				prepare_timer(Cooking.Pot.CHICKEN_BROTH_BOILING, Cooking.HeldItemType.POT, 0, 10, "play")
 			
 			elif items[0] == Cooking.Pot.CHICKEN_BROTH_BOILING and item_type == Cooking.HeldItemType.INGREDIENT_PREPARED and held_item == Cooking.IngredientPrepared.TOMATO_PASTE:
 				put_item(Cooking.Pot.CHICKEN_BROTH_TOMATO_PASTE, Cooking.HeldItemType.POT, 0)
 				update_utensil(Cooking.UtensilType.OVEN_COOK)
-				prepare_timer(Cooking.Pot.TOMATO_SOUP_BOILING, Cooking.HeldItemType.POT, 0, 10)
+				prepare_timer(Cooking.Pot.TOMATO_SOUP_BOILING, Cooking.HeldItemType.POT, 0, 10, "play")
 			
 			elif items[0] == Cooking.Pot.RICE and item_type == Cooking.HeldItemType.INGREDIENT and held_item == Cooking.Ingredient.BEANS:
 				put_item(Cooking.Pot.RICE_BEANS, Cooking.HeldItemType.POT, 0)
 				update_utensil(Cooking.UtensilType.OVEN_COOK)
-				prepare_timer(Cooking.Pot.RICE_BEANS_BOILING, Cooking.HeldItemType.POT, 0, 10)
+				prepare_timer(Cooking.Pot.RICE_BEANS_BOILING, Cooking.HeldItemType.POT, 0, 10, "play")
 			
 			else: return [held_item, item_type]
 

@@ -13,10 +13,10 @@ enum Pot { EMPTY, WATER, WATER_BOILING, NOODLES, NOODLES_BOILING, TOMATO_PASTE, 
 enum Dish { BEANS_RICE, CHICKEN_SOUP, BEEF_POTATOES, TOMATO_SOUP }
 
 var times = {
-    Dish.BEANS_RICE: 15,
-    Dish.BEEF_POTATOES: 20,
-    Dish.CHICKEN_SOUP: 25,
-    Dish.TOMATO_SOUP: 35,
+    Dish.BEANS_RICE: 12,
+    Dish.BEEF_POTATOES: 16,
+    Dish.CHICKEN_SOUP: 24,
+    Dish.TOMATO_SOUP: 34,
 }
 
 var first_goals = [
