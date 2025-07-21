@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://b7g72mdnao4id"]
+
+[ext_resource type="Script" uid="uid://wn84e7b4oxnx" path="res://scripts/utensil.gd" id="1_mdlik"]
+[ext_resource type="Texture2D" uid="uid://so5yyfugx2i3" path="res://art/visual/utensils.png" id="2_ffwkb"]
+[ext_resource type="Texture2D" uid="uid://dutrs8llapdh7" path="res://art/visual/pots.png" id="3_hub4u"]
+[ext_resource type="Texture2D" uid="uid://b0xm06eka5hf" path="res://art/visual/ingredients_prepared.png" id="4_b71ck"]
+[ext_resource type="Texture2D" uid="uid://cfeybe18suaqw" path="res://art/visual/bar_progress.png" id="5_b71ck"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mdlik"]
+size = Vector2(32, 18)
+
+[node name="Utensil" type="StaticBody2D"]
+collision_layer = 6
+collision_mask = 0
+script = ExtResource("1_mdlik")
+
+[node name="Timer1" type="Timer" parent="."]
+one_shot = true
+
+[node name="Timer2" type="Timer" parent="."]
+one_shot = true
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_ffwkb")
+hframes = 10
+frame = 8
+
+[node name="Sprite1" type="Sprite2D" parent="."]
+position = Vector2(0, -13)
+texture = ExtResource("3_hub4u")
+hframes = 18
+
+[node name="Sprite2" type="Sprite2D" parent="."]
+position = Vector2(0, 8)
+texture = ExtResource("4_b71ck")
+hframes = 13
+frame = 11
+
+[node name="Progress1" type="TextureProgressBar" parent="."]
+offset_left = -15.0
+offset_top = -25.0
+offset_right = 15.0
+offset_bottom = -21.0
+step = 0.01
+texture_progress = ExtResource("5_b71ck")
+
+[node name="Progress2" type="TextureProgressBar" parent="."]
+offset_left = -15.0
+offset_top = -3.0
+offset_right = 15.0
+offset_bottom = 1.0
+step = 0.01
+texture_progress = ExtResource("5_b71ck")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7)
+shape = SubResource("RectangleShape2D_mdlik")
+metadata/_edit_lock_ = true

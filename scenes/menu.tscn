@@ -1,9 +1,191 @@
-[gd_scene format=3 uid="uid://cx2rhsaub74w2"]
+[gd_scene load_steps=3 format=3 uid="uid://cx2rhsaub74w2"]
 
-[node name="Menu" type="Control"]
+[ext_resource type="Script" uid="uid://2pg18vqqsuxl" path="res://scripts/menu.gd" id="1_yqeox"]
+[ext_resource type="Script" uid="uid://c2qexhuqvfd71" path="res://scripts/statistics.gd" id="2_vjb58"]
+
+[node name="Menu" type="Control" node_paths=PackedStringArray("button_start", "button_stats", "statistics")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_yqeox")
+button_start = NodePath("Buttons/MarginContainer/VBoxContainer/ButtonStart")
+button_stats = NodePath("Buttons/MarginContainer/VBoxContainer/ButtonStats")
+statistics = NodePath("Statistics")
+
+[node name="Buttons" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Buttons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.392157, 0.196078, 0.294118, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Buttons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Buttons/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ButtonStart" type="Button" parent="Buttons/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Start The Game"
+
+[node name="ButtonStats" type="Button" parent="Buttons/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Statistics"
+
+[node name="Statistics" type="Control" parent="." node_paths=PackedStringArray("column_number", "column_name", "column_score", "column_datetime", "button_sort_name", "button_sort_score", "button_sort_datetime", "button_back")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_vjb58")
+column_number = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Columns/Number")
+column_name = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Columns/Name")
+column_score = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Columns/Score")
+column_datetime = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Columns/DateTime")
+button_sort_name = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ButtonSortName")
+button_sort_score = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ButtonSortScore")
+button_sort_datetime = NodePath("MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ButtonSortDateTime")
+button_back = NodePath("MarginContainer/VBoxContainer/ButtonBack")
+
+[node name="ColorRect" type="ColorRect" parent="Statistics"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.392157, 0.196078, 0.294118, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Statistics"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Statistics/MarginContainer"]
+layout_mode = 2
+
+[node name="LabelTitle" type="Label" parent="Statistics/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Statistics"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Statistics/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Statistics/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 46
+theme_override_constants/margin_right = 14
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ButtonSortName" type="Button" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Name"
+
+[node name="ButtonSortScore" type="Button" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Score"
+
+[node name="ButtonSortDateTime" type="Button" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "DateTime"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_right = 5
+
+[node name="Columns" type="HBoxContainer" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="Number" type="VBoxContainer" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Columns"]
+custom_minimum_size = Vector2(41, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Columns/Number"]
+layout_mode = 2
+text = "1"
+horizontal_alignment = 1
+
+[node name="Name" type="VBoxContainer" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Columns/Name"]
+layout_mode = 2
+text = "1"
+
+[node name="Score" type="VBoxContainer" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Columns/Score"]
+layout_mode = 2
+text = "1"
+
+[node name="DateTime" type="VBoxContainer" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Statistics/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Columns/DateTime"]
+layout_mode = 2
+text = "1"
+
+[node name="ButtonBack" type="Button" parent="Statistics/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "  Back to Menu  "
